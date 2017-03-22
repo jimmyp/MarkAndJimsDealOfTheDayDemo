@@ -1,0 +1,9 @@
+C:\Users\jimp\dev\MarkAndJimsDealOfTheDay\MarkAndJimsDealOfTheDay\bin\Debug\netcoreapp1.0\MarkAndJimsDealOfTheDay.deps.json
+C:\Users\jimp\dev\MarkAndJimsDealOfTheDay\MarkAndJimsDealOfTheDay\bin\Debug\netcoreapp1.0\MarkAndJimsDealOfTheDay.runtimeconfig.json
+C:\Users\jimp\dev\MarkAndJimsDealOfTheDay\MarkAndJimsDealOfTheDay\bin\Debug\netcoreapp1.0\MarkAndJimsDealOfTheDay.runtimeconfig.dev.json
+C:\Users\jimp\dev\MarkAndJimsDealOfTheDay\MarkAndJimsDealOfTheDay\bin\Debug\netcoreapp1.0\MarkAndJimsDealOfTheDay.dll
+C:\Users\jimp\dev\MarkAndJimsDealOfTheDay\MarkAndJimsDealOfTheDay\bin\Debug\netcoreapp1.0\MarkAndJimsDealOfTheDay.pdb
+C:\Users\jimp\dev\MarkAndJimsDealOfTheDay\MarkAndJimsDealOfTheDay\obj\Debug\netcoreapp1.0\MarkAndJimsDealOfTheDay.csprojResolveAssemblyReference.cache
+C:\Users\jimp\dev\MarkAndJimsDealOfTheDay\MarkAndJimsDealOfTheDay\obj\Debug\netcoreapp1.0\MarkAndJimsDealOfTheDay.AssemblyInfo.cs
+C:\Users\jimp\dev\MarkAndJimsDealOfTheDay\MarkAndJimsDealOfTheDay\obj\Debug\netcoreapp1.0\MarkAndJimsDealOfTheDay.dll
+C:\Users\jimp\dev\MarkAndJimsDealOfTheDay\MarkAndJimsDealOfTheDay\obj\Debug\netcoreapp1.0\MarkAndJimsDealOfTheDay.pdb
