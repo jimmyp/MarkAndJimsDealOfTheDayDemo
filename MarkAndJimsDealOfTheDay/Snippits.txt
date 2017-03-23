@@ -1,0 +1,8 @@
+﻿// Can create potential order
+
+var errors = new List<string>();
+if (customerId == Guid.Empty) errors.Add("Customer id is empty");
+if (string.IsNullOrEmpty(productCode)) errors.Add("Product code is empty");
+if (quantity < 1) errors.Add("Must order at least one widget");
+
+return errors;
