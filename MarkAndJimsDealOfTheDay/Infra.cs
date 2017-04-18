@@ -26,6 +26,7 @@ namespace MarkAndJimsDealOfTheDay
     {
         IRepository Repository { get; set; }
         IBus Bus { get; set; }
+        void Commit();
     }
 
     public interface IBus
