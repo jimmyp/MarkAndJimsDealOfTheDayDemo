@@ -39,4 +39,10 @@ namespace MarkAndJimsDealOfTheDay
         T Get<T>(Guid id);
         void Save<T>(T entity);
     }
+
+
+    public interface IHandle<T>
+    {
+        void Handle(T evt);
+    }
 }

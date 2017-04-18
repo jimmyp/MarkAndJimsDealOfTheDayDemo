@@ -1,46 +1,9 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
 
 namespace MarkAndJimsDealOfTheDay.Controllers
 {
-    [Produces("application/json")]
-    [Route("api/PlaceOrder")]
-    public class PlaceOrderController : Controller
-    {
-        public IActionResult Post(PlaceOrderRequest request)
-        {
-            if (!PotentialOrder.CanBePlaced(request.customerId, request.productCode, request.quantity))
-            {
-                return BadRequest(PotentialOrder.GetPlacingErrors(request.customerId, request.productCode, request.quantity));
-            }
-
-            return Ok();
-        }
-    }
-
-    public class PlaceOrderService
-    {
-        private readonly IUow _uow;
-
-        public PlaceOrderService(IUow uow)
-        {
-            _uow = uow;
-        }
-
-        public void PlaceOrder(Guid customerId, string productCode, int quantity)
-        {
-            var result = PotentialOrder.BuildOrder(customerId, productCode, quantity);
-
-            _uow.Repository.Save(result.Entity);
-            _uow.Bus.Publish(result.Event);
-            _uow.Commit();
-        }
-    }
-
     public class PotentialOrder : IEntity
     {
         public Guid CustomerId { get; }
@@ -74,16 +37,5 @@ namespace MarkAndJimsDealOfTheDay.Controllers
             if (quantity < 1) errors.Add("Must order at least one widget");
             return errors;
         }
-    }
-
-    public class PotentialOrderPlaced : IEvent
-    {
-    }
-
-    public class PlaceOrderRequest
-    {
-        public Guid customerId { get; set; }
-        public string productCode { get; set; }
-        public int quantity { get; set; }
     }
 }
