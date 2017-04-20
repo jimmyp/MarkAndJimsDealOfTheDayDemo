@@ -8,6 +8,8 @@ namespace MarkAndJimsDealOfTheDay.Controllers
     [Route("api/PlaceOrder")]
     public class PlaceOrderController : Controller
     {
+        PlaceOrderService _service;
+
         public PlaceOrderController(PlaceOrderService service)
         {
             _service = service;

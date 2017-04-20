@@ -1,4 +1,5 @@
 ﻿using System;
+using MarkAndJimsDealOfTheDay.FulfillingOrders;
 
 namespace MarkAndJimsDealOfTheDay
 {
@@ -7,7 +8,7 @@ namespace MarkAndJimsDealOfTheDay
         public IEntity Entity { get; }
         public IEvent Event { get; }
 
-        public DomainOperationResult(IEntity entity, IEvent evt)
+        public DomainOperationResult(OrderFullFullfilment entity, IEvent evt)
         {
             Entity = entity;
             Event = evt;
@@ -37,7 +38,9 @@ namespace MarkAndJimsDealOfTheDay
     public interface IRepository
     {
         T Get<T>(Guid id);
+        T Get<T>(string id);
         void Save<T>(T entity);
+        T GetAll<T>();
     }
 
 

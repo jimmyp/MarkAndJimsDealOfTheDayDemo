@@ -10,10 +10,17 @@ namespace MarkAndJimsDealOfTheDay.FulfillingOrders
     [Route("api/PlaceOrder")]
     public class OrdersToBeFulfilledController : Controller
     {
+        private readonly IRepository _readModelRepository;
+
+        public OrdersToBeFulfilledController(IRepository readModelRepository)
+        {
+            _readModelRepository = readModelRepository;
+        }
+
         [HttpGet]
         public IActionResult Get()
         {
-            return Ok(_readModel.GetAll<OrderToBeFulfilledViewModel>());
+            return Ok(_readModelRepository.GetAll<OrderToBeFulfilledViewModel>());
         }
     }
 }
