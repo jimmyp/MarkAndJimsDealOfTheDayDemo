@@ -1,8 +1,113 @@
-﻿// Can create potential order
+﻿// Orders to be fulfilled projector
 
-var errors = new List<string>();
-if (customerId == Guid.Empty) errors.Add("Customer id is empty");
-if (string.IsNullOrEmpty(productCode)) errors.Add("Product code is empty");
-if (quantity < 1) errors.Add("Must order at least one widget");
+	public class OrdersToBeFulfilledProjector : IHandle<PotentialOrderPlaced>
+    {
+        private readonly IRepository _readModelRepository;
 
-return errors;
+        public OrdersToBeFulfilledProjector(IRepository readModelRepository)
+        {
+            _readModelRepository = readModelRepository;
+        }
+
+        public void Handle(PotentialOrderPlaced evt)
+        {
+            var rm = _readModelRepository.Get<InventoryInWarehouseViewModel>(evt.ProductCode);
+            var vm = new OrderToBeFulfilledViewModel(evt.Id, evt.ProductCode, rm.Description, rm.AisleNumber, evt.Quantity);
+            _readModelRepository.Save(vm);
+        }
+    }
+
+//Inventory Projector
+
+	public class InventoryProjector : IHandle<InventoryPlacedInWarehouse>
+    {
+        private readonly IRepository _readModelRepository;
+
+        public InventoryProjector(IRepository readModelRepository)
+        {
+            _readModelRepository = readModelRepository;
+        }
+
+        public void Handle(InventoryPlacedInWarehouse evt)
+        {
+            var vm = new InventoryInWarehouseViewModel(evt.Id, evt.Description, evt.AisleNumber);
+            _readModelRepository.Save(vm);
+        }
+    }
+
+// OrdersToBeFulfilledController
+
+	[Produces("application/json")]
+    [Route("api/PlaceOrder")]
+    public class OrdersToBeFulfilledController : Controller
+    {
+        private readonly IRepository _readModelRepository;
+
+        public OrdersToBeFulfilledController(IRepository readModelRepository)
+        {
+            _readModelRepository = readModelRepository;
+        }
+
+        [HttpGet]
+        public IActionResult Get()
+        {
+            return Ok(_readModelRepository.GetAll<OrderToBeFulfilledViewModel>());
+        }
+    }
+
+// PotentialOrderPlacedHandler
+
+	public class PotentialOrderPlacedHandler : IHandle<PotentialOrderPlaced>
+    {
+        private readonly IUow _uow;
+
+        public PotentialOrderPlacedHandler(IUow uow)
+        {
+            _uow = uow;
+        }
+
+        public void Handle(PotentialOrderPlaced evt)
+        {
+            var result = OrderFullFullfilment.CreateFrom(evt.Id, evt.ProductCode, evt.Quantity);
+
+            _uow.Repository.Save(result.Entity);
+            _uow.Bus.Publish(result.Event);
+            _uow.Commit();
+        }
+    }
+
+// Fullfill order service method
+
+	
+        public void FulfillOrder(Guid orderId, string productCode, int quantity)
+        {
+
+            var orderFulfillment = _uow.Repository.Get<OrderFullFullfilment>(orderId);
+
+            var result = orderFulfillment.Fulfillwith(productCode, quantity);
+
+            _uow.Repository.Save(result.Entity);
+            _uow.Bus.Publish(result.Event);
+            _uow.Commit();
+        }
+
+//Fulfill with domain operation
+
+		public DomainOperationResult Fulfillwith(string productCode, int quantity)
+        {
+
+            if (quantity < this._quantityNeededToFill)
+            {
+                _quantityNeededToFill -= quantity;
+                return new DomainOperationResult(this, new OrderPartiallyFulfilled(_id, _quantityNeededToFill));
+            }
+
+            if (quantity > this._quantityNeededToFill)
+                return new DomainOperationResult(this, new OrderOverFilled(_id, quantity));
+
+
+            if (productCode != this._productCode)
+                return new DomainOperationResult(this, new OrderFilledWithWrongProduct(_id));
+            
+            return new DomainOperationResult(this, new OrderFilled(_id));
+        }

@@ -45,6 +45,7 @@ namespace MarkAndJimsDealOfTheDay
 
 
     public interface IHandle<T>
+        where T : IEvent
     {
         void Handle(T evt);
     }
