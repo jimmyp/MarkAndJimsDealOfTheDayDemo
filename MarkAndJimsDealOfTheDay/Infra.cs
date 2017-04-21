@@ -8,7 +8,7 @@ namespace MarkAndJimsDealOfTheDay
         public IEntity Entity { get; }
         public IEvent Event { get; }
 
-        public DomainOperationResult(OrderFullFullfilment entity, IEvent evt)
+        public DomainOperationResult(IEntity entity, IEvent evt)
         {
             Entity = entity;
             Event = evt;

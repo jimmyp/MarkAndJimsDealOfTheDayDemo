@@ -1,6 +1,6 @@
 using System;
 
-namespace MarkAndJimsDealOfTheDay
+namespace MarkAndJimsDealOfTheDay.PlacingOrders
 {
     public class PlaceOrderService
     {

@@ -1,8 +1,6 @@
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
-namespace MarkAndJimsDealOfTheDay.Controllers
+namespace MarkAndJimsDealOfTheDay.PlacingOrders
 {
     [Produces("application/json")]
     [Route("api/PlaceOrder")]

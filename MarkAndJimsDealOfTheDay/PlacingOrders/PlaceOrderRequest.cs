@@ -1,6 +1,6 @@
 using System;
 
-namespace MarkAndJimsDealOfTheDay.Controllers
+namespace MarkAndJimsDealOfTheDay.PlacingOrders
 {
     public class PlaceOrderRequest
     {
