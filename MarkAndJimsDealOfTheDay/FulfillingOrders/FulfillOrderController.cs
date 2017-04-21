@@ -13,9 +13,9 @@ namespace MarkAndJimsDealOfTheDay.FulfillingOrders
         public IActionResult Post(FullfilOrderRequest request)
         {
 
-            if (!OrderFullFullfilment.CanBeCreatedFrom(request.OrderId, request.ProductCode, request.Quantity))
+            if (!OrderFullFullfilment.CanBeFullFilled(request.OrderId, request.ProductCode, request.Quantity))
             {
-                return BadRequest(OrderFullFullfilment.GetCreationErrors(request.OrderId, request.ProductCode, request.Quantity));
+                return BadRequest(OrderFullFullfilment.FullfillErrors(request.OrderId, request.ProductCode, request.Quantity));
             }
 
             _service.FulfillOrder(request.OrderId, request.ProductCode, request.Quantity);

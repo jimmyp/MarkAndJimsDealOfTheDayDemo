@@ -9,6 +9,7 @@ namespace MarkAndJimsDealOfTheDay.FulfillingOrders
         private readonly Guid _id;
         private readonly string _productCode;
         private int _quantityNeededToFill;
+        private bool _orderIsBroken;
 
         private OrderFullFullfilment(Guid orderId, string productCode, int quantityNeededToFill)
         {
@@ -37,6 +38,22 @@ namespace MarkAndJimsDealOfTheDay.FulfillingOrders
         {
             return new DomainOperationResult(new OrderFullFullfilment(orderId, productCode, quantity), new OrderFulfilmentCreated(orderId, productCode, quantity));
         }
-        
+
+        public DomainOperationResult FulfillWith(string requestProductCode, int quantity)
+        {
+            if(_orderIsBroken)
+                return new DomainOperationResult(this, new OrderFilledWithWrongProduct(_id));
+            
+            if (quantity < _quantityNeededToFill)
+            {
+                _quantityNeededToFill -= quantity;
+                return new DomainOperationResult(this, new OrderPartiallyFulfilled(_id, _quantityNeededToFill));
+            }
+
+            if (requestProductCode == _productCode) return new DomainOperationResult(this, new OrderFilled(_id));
+
+            _orderIsBroken = true;
+            return new DomainOperationResult(this, new OrderFilledWithWrongProduct(_id));
+        }
     }
 }

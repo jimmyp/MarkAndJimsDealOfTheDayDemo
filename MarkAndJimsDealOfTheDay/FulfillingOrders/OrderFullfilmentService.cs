@@ -13,5 +13,11 @@ namespace MarkAndJimsDealOfTheDay.FulfillingOrders
         {
             _uow = uow;
         }
+
+        public void FulfillOrder(Guid orderId, string requestProductCode, int requestQuantity)
+        {
+            var fullfilment = _uow.Repository.Get<OrderFullFullfilment>(orderId);
+            fullfilment.FulfillWith(requestProductCode, requestQuantity);
+        }
     }
 }
