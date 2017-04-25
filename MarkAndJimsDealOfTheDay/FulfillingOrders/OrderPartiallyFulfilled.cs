@@ -1,4 +1,4 @@
-﻿using System;
+﻿﻿using System;
 
 namespace MarkAndJimsDealOfTheDay.FulfillingOrders
 {
@@ -12,7 +12,7 @@ namespace MarkAndJimsDealOfTheDay.FulfillingOrders
             if (id == Guid.Empty) throw new ArgumentException(nameof(id));
             if (quantityRequired <= 0) throw new ArgumentOutOfRangeException(nameof(quantityRequired));
             Id = id;
-            quantityRequired = quantityRequired;
+            QuantityRequired = quantityRequired;
         }
     }
 }
